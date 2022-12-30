@@ -1,13 +1,14 @@
 import os
+import tensorflow as tf
 import cv2
-import numpy as np
 from keras.preprocessing import image
 import warnings
 warnings.filterwarnings("ignore")
-from keras.preprocessing.image import load_img, img_to_array 
+from keras.preprocessing.image import load_img, img_to_array
 from keras.models import  load_model
 import matplotlib.pyplot as plt
 import numpy as np
+tf.enable_eager_execution()
 
 # load model
 model = load_model("best_model.h5")
@@ -16,7 +17,7 @@ model = load_model("best_model.h5")
 face_haar_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
 
 
-cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture(1)
 
 while True:
     ret, test_img = cap.read()  # captures frame and returns boolean value and captured image
@@ -47,7 +48,7 @@ while True:
     resized_img = cv2.resize(test_img, (1000, 700))
     cv2.imshow('Facial emotion analysis ', resized_img)
 
-    if cv2.waitKey(10) == ord('q'):  # wait until 'q' key is pressed
+    if cv2.waitKey(1) & 0xFF == ord('q'):
         break
 
 cap.release()
